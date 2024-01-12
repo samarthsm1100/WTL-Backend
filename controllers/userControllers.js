@@ -17,7 +17,11 @@ const signup = async (req,res) => {
 
     const user = new User({
         email: email,
-        password: hashedPassword
+        password: hashedPassword,
+        name: req.body.name,
+        username: req.body.username,
+        phone: req.body.phone,
+        location: req.body.location
     })
 
     const savedUser = await user.save();
@@ -49,7 +53,7 @@ const login = async (req,res) => {
         res.cookie("accessToken", accessToken, {
             maxAge: 1000*60
         })
-        res.json("LoggeIn")
+        res.json("LoggedIn")
     }
 }
 
