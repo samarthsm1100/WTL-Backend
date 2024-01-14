@@ -2,16 +2,25 @@ const express = require('express')
 const mongoose = require('mongoose')
 require('dotenv').config()
 const userRoutes = require('./routes/userRoutes')
+const petRoutes = require('./routes/petRoutes')
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 // express app
 const app = express();
 
 // middleware
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}))
 app.use(express.json());
+app.use(cookieParser())
 app.use(express.urlencoded({extended:true}));
 
 // routes
 app.use(userRoutes)
+app.use(petRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
