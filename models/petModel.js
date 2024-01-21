@@ -19,8 +19,9 @@ const petSchema = new Schema({
         type: String,
         required: true
     },
-    location:{
-
+    address:{
+        type: String,
+        required: true
     },
     status:{
         type: String,

@@ -1,6 +1,5 @@
 const User = require('../models/userModel')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
 const { createToken } = require('../middleware/requireAuth');
 
 const signup = async (req,res) => {
@@ -21,7 +20,7 @@ const signup = async (req,res) => {
         name: req.body.name,
         username: req.body.username,
         phone: req.body.phone,
-        location: req.body.location
+        address: req.body.address
     })
 
     const savedUser = await user.save();

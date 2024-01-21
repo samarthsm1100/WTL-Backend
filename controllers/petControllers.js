@@ -49,4 +49,15 @@ const getPetByID = async(req,res) => {
     }
 }
 
-module.exports = {postFoundPet, getAllPets, getPetByID}
+const stories = async (req,res) => {
+    try {
+        
+        const data = await Pet.find({status: "Returned"})
+        return res.status(200).json({data: data})
+        
+    } catch (error) {
+        return res.status(500).json({message: error.message})
+    }
+}
+
+module.exports = {postFoundPet, getAllPets, getPetByID, stories}

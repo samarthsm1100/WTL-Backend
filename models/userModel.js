@@ -2,11 +2,6 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema;
 
-const locationSchema = new Schema({
-    lat: String,
-    long: String
-})
-
 const userSchema = new Schema({
     email:{
         type: String,
@@ -33,8 +28,9 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    location:{
-        type: locationSchema,
+    address:{
+        type: String,
+        required: true
     },
     lost_pets:{
         type: [String]
