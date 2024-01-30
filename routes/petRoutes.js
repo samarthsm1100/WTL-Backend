@@ -1,7 +1,7 @@
 const express = require('express');
 const Pet = require('../models/petModel');
 const { validateToken } = require('../middleware/requireAuth');
-const { getAllPets, getPetByID, stories, contactReporter, foundPet } = require('../controllers/petControllers');
+const { getAllPets, getPetByID, stories, contactReporter, foundPet, myReportedPets, claimedPet } = require('../controllers/petControllers');
 
 const router = express.Router();
 const upload = require('../middleware/upload');
@@ -11,5 +11,7 @@ router.get('/pet', validateToken, getPetByID);
 router.get('/allpets', validateToken, getAllPets);
 router.get('/stories', validateToken, stories)
 router.post('/contactreporter/:id', validateToken, contactReporter)
+router.get('/reportedPets', validateToken, myReportedPets)
+router.put('claimedPet/:id', validateToken, claimedPet)
 
 module.exports = router;

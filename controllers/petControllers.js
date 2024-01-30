@@ -83,4 +83,25 @@ const stories = async (req,res) => {
     }
 }
 
-module.exports = {foundPet, getAllPets, getPetByID, stories, contactReporter}
+const myReportedPets = async (req,res) => {
+    try {
+        
+        const userID = req.cookie["userId"]
+        const data = await Pet.find({reportedBy: userID})
+        return res.status(200).json({data: data})
+
+    } catch (error) {
+        return res.json({message: error.message})
+    }
+}
+
+const claimedPet = async (req,res) => {
+    try {
+        const petId = req.params.id
+        Pet.updateOne({_id: petId}, {status: "Returned"});
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+}
+
+module.exports = {foundPet, getAllPets, getPetByID, stories, contactReporter, myReportedPets, claimedPet}
