@@ -36,27 +36,31 @@ const signup = async (req,res) => {
 }
 
 const login = async (req,res) => {
-    const {email, password} = req.body;
+    try {
+        const {email, password} = req.body;
 
-    const user = await User.findOne({email})
+        const user = await User.findOne({email})
 
-    if(!user){
-        res.status(400).json({message: "User does not exist"})
-        return
-    }
+        if(!user){
+            res.status(400).json({message: "User does not exist"})
+            return
+        }
 
-    const valid = bcrypt.compare(password, user.password);
+        const valid = bcrypt.compare(password, user.password);
 
-    if(valid){
-        const accessToken = createToken(user);
-        // console.log(user)
-        res.cookie("accessToken", accessToken, {
-            maxAge: 1000*60*60*24*30,
-        })
-        res.cookie("userId", user._id.toString(), {
-            maxAge: 1000*60*60*24*30,
-        })
-        res.json("LoggedIn")
+        if(valid){
+            const accessToken = createToken(user);
+            // console.log(user)
+            res.cookie("accessToken", accessToken, {
+                maxAge: 1000*60*60*24*30,
+            })
+            res.cookie("userId", user._id.toString(), {
+                maxAge: 1000*60*60*24*30,
+            })
+            res.json("LoggedIn")
+        }
+    } catch (error) {
+        return res.status(500).json({error : "Login Error"});
     }
 }
 
