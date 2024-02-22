@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const bcrypt = require('bcrypt')
+
 const { createToken } = require('../middleware/requireAuth');
 
 const signup = async (req,res) => {
@@ -46,16 +47,23 @@ const login = async (req,res) => {
             return
         }
 
-        const valid = bcrypt.compare(password, user.password);
-
+        const valid = await bcrypt.compare(password, user.password);
+        console.log(valid)
         if(valid){
-            const accessToken = createToken(user);
-            // console.log(user)
+            const accessToken = await createToken(user);
+            //  console.log(accessToken)
             res.cookie("accessToken", accessToken, {
                 maxAge: 1000*60*60*24*30,
+                httpOnly: true,
+                sameSite: "Lax",
+                Secure: true
+                
             })
             res.cookie("userId", user._id.toString(), {
                 maxAge: 1000*60*60*24*30,
+                httpOnly: true,
+                sameSite: "Lax",
+                secure: true
             })
             res.json("LoggedIn")
         }
