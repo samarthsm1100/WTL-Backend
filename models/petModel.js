@@ -17,7 +17,8 @@ const petSchema = new Schema({
     },
     image_url:{
         type: String,
-        required: true
+        required: false,
+        default:""
     },
     address:{
         type: String,
@@ -25,7 +26,8 @@ const petSchema = new Schema({
     },
     status:{
         type: String,
-        required: true
+        required: false,
+        default:"active"
     },
     description:{
         type: String,

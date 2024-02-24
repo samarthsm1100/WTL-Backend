@@ -6,14 +6,13 @@ const foundPet = async (req, res) => {
     if(!userId){
         return res.status(400).json({error : "User not Authenticated"})
     }
-    const {species, breed, color, address, status, description} = req.body;
+    const {species, breed, color, addr, desc} = req.body;
     const pet = new Pet({
         species,
         breed,
         color,
-        address,
-        status,
-        description,
+        address:addr,
+        description:desc,
         reportedBy: userId,
     })
     if(req.file){
