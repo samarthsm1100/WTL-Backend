@@ -20,6 +20,10 @@ const petSchema = new Schema({
         required: false,
         default:""
     },
+    image_name:{
+        type: String,
+        default:""
+    },
     address:{
         type: String,
         required: true

@@ -1,5 +1,6 @@
 const Pet = require('../models/petModel');
 const User = require('../models/userModel');
+const { ObjectId } = require('mongodb');
 
 const foundPet = async (req, res) => {
     const userId = req.cookies["userId"]
@@ -11,13 +12,10 @@ const foundPet = async (req, res) => {
         species,
         breed,
         color,
-        address:addr,
-        description:desc,
+        address: addr,
+        description: desc,
         reportedBy: userId,
     })
-    if(req.file){
-        pet.image_url = req.file.path
-    }
     try {
         const newPet = await pet.save();
         console.log(newPet)
@@ -83,9 +81,9 @@ const stories = async (req,res) => {
 
 const myReportedPets = async (req,res) => {
     try {
-        
-        const userID = req.cookie["userId"]
+        const userID = req.cookies["userId"]
         const data = await Pet.find({reportedBy: userID})
+        console.log("Data " ,data)
         return res.status(200).json({data: data})
 
     } catch (error) {
@@ -93,13 +91,17 @@ const myReportedPets = async (req,res) => {
     }
 }
 
-const claimedPet = async (req,res) => {
+const claimedPet = async (req, res) => {
     try {
-        const petId = req.params.id
-        Pet.updateOne({_id: petId}, {status: "Returned"});
+        const petId = req.params.id;
+        console.log(petId, "Pet ID")
+        const resp = await Pet.findByIdAndUpdate(petId, { status: "Returned" });
+        console.log(resp);
+        return res.status(200).json({ message: "Pet status updated successfully" });
     } catch (error) {
-        return res.status(400).json({message: error.message})
+        return res.status(400).json({ message: error.message });
     }
-}
+};
+
 
 module.exports = {foundPet, getAllPets, getPetByID, stories, contactReporter, myReportedPets, claimedPet}

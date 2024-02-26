@@ -7,7 +7,7 @@ const createToken = async(user) => {
 
 const validateToken = (req,res,next) => {
     const accessToken = req.cookies["accessToken"]
-    console.log("req",req.cookies)
+    
     if(!accessToken){
         return res.status(400).json({error : "User not Authenticated"})
     }
@@ -16,7 +16,7 @@ const validateToken = (req,res,next) => {
         const validToken = verify(accessToken, process.env.SECRET)
         if(validToken){
             req.authenticated = true;
-            return next();
+            next();
         }
         else{
             return res.status(400).json({error : "User not Authenticated"})

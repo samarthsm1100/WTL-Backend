@@ -54,16 +54,12 @@ const login = async (req,res) => {
             //  console.log(accessToken)
             res.cookie("accessToken", accessToken, {
                 maxAge: 1000*60*60*24*30,
-                httpOnly: true,
                 sameSite: "Lax",
-                Secure: true
                 
             })
             res.cookie("userId", user._id.toString(), {
                 maxAge: 1000*60*60*24*30,
-                httpOnly: true,
                 sameSite: "Lax",
-                secure: true
             })
             res.json("LoggedIn")
         }
@@ -72,4 +68,14 @@ const login = async (req,res) => {
     }
 }
 
-module.exports = {login, signup}
+const logout = async (req,res) => {
+    try {
+        res.clearCookie("accessToken");
+        res.clearCookie("userId");
+        res.json("LoggedOut")
+    } catch (error) {
+        return res.status(500).json({error : "Logout Error"});
+    }
+}
+
+module.exports = {login, signup, logout}
