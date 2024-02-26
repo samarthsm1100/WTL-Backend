@@ -1,14 +1,14 @@
 const Pet = require('../models/petModel');
 const User = require('../models/userModel');
-const { ObjectId } = require('mongodb');
 
 const foundPet = async (req, res) => {
     const userId = req.cookies["userId"]
     if(!userId){
         return res.status(400).json({error : "User not Authenticated"})
     }
-    const {species, breed, color, addr, desc} = req.body;
+    const {species, breed, color, addr, desc, image_url} = req.body;
     const pet = new Pet({
+        image_url,
         species,
         breed,
         color,
@@ -26,11 +26,8 @@ const foundPet = async (req, res) => {
 }
 
 const contactReporter = async (req, res) => {
-    const pet = await Pet.findById(req.params.id);
     try {
-        const {reportedBy} = pet;
-        const reporter = await User.findById(reportedBy);
-        
+        const reporter = await User.findById(req.params.id);
         try {
             return res.status(200).json({
                 name: reporter.name,
@@ -50,7 +47,6 @@ const contactReporter = async (req, res) => {
 const getAllPets = async(req,res) => {
     try{
         const petData = await Pet.find({});
-        console.log(petData)
         res.status(200).json(petData);
     }
     catch(err){
@@ -103,5 +99,13 @@ const claimedPet = async (req, res) => {
     }
 };
 
+const deleteAll = async(req,res) => {
+    try {
+        await Pet.deleteMany({});
+        return res.json({message: "All pets deleted successfully"})
+    } catch (error) {
+        return res.status(500).json({message: error.message})
+    }
+}
 
-module.exports = {foundPet, getAllPets, getPetByID, stories, contactReporter, myReportedPets, claimedPet}
+module.exports = {foundPet, getAllPets, getPetByID, stories, contactReporter, myReportedPets, deleteAll, claimedPet}
