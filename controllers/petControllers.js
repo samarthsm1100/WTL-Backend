@@ -46,7 +46,7 @@ const contactReporter = async (req, res) => {
 
 const getAllPets = async(req,res) => {
     try{
-        const petData = await Pet.find({});
+        const petData = await Pet.find({status: 'active'});
         res.status(200).json(petData);
     }
     catch(err){
