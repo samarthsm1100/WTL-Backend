@@ -5,6 +5,7 @@ const userRoutes = require('./routes/userRoutes')
 const petRoutes = require('./routes/petRoutes')
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+require('./cronJob')
 
 // express app
 const app = express();
@@ -16,7 +17,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
- app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:true}));
 
 // routes
 app.use(userRoutes)

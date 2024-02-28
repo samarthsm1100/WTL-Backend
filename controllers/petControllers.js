@@ -108,4 +108,13 @@ const deleteAll = async(req,res) => {
     }
 }
 
-module.exports = {foundPet, getAllPets, getPetByID, stories, contactReporter, myReportedPets, deleteAll, claimedPet}
+const deleteSingle = async(req,res) => {
+    try {
+        const res = await Pet.deleteOne({_id: req.params.id});
+        return res.json({message: "Pet deleted successfully"})
+    } catch (error) {
+        return res.status(500).json({message: error.message})    
+    }
+}
+
+module.exports = {foundPet, getAllPets, getPetByID, stories, contactReporter, myReportedPets, deleteSingle, deleteAll, claimedPet}

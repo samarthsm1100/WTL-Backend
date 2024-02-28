@@ -1,6 +1,6 @@
 const express = require('express');
 const { validateToken } = require('../middleware/requireAuth');
-const { getAllPets, getPetByID, stories, contactReporter, foundPet, myReportedPets, claimedPet, deleteAll } = require('../controllers/petControllers');
+const { getAllPets, getPetByID, stories, contactReporter, foundPet, myReportedPets, claimedPet, deleteAll, deleteSingle } = require('../controllers/petControllers');
 
 const router = express.Router();
 
@@ -12,5 +12,6 @@ router.get('/contactreporter/:id', validateToken, contactReporter)
 router.get('/reportedPets', validateToken, myReportedPets)
 router.put('/claimedPet/:id', validateToken, claimedPet)
 router.delete('/deleteAll', validateToken, deleteAll)
+router.delete('/deleteSingle/:id', validateToken, deleteSingle)
 
 module.exports = router;
