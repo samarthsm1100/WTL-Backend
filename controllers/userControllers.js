@@ -56,7 +56,8 @@ const login = async (req,res) => {
                 maxAge: 1000*60*60*24*30,
                 sameSite: "None",
                 secure: true, // Note the lowercase 's',
-                httpOnly: true
+                httpOnly: true,
+                partitioned: true
             });
             
             res.cookie("userId", user._id.toString(), {
