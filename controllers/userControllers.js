@@ -54,12 +54,12 @@ const login = async (req,res) => {
             //  console.log(accessToken)
             res.cookie("accessToken", accessToken, {
                 maxAge: 1000*60*60*24*30,
-                sameSite: "Lax",
+                sameSite: "None",
                 
             })
             res.cookie("userId", user._id.toString(), {
                 maxAge: 1000*60*60*24*30,
-                sameSite: "Lax",
+                sameSite: "None",
             })
             res.json("LoggedIn")
         }
