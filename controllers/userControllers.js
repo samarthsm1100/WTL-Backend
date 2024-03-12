@@ -55,15 +55,17 @@ const login = async (req,res) => {
             res.cookie("accessToken", accessToken, {
                 maxAge: 1000*60*60*24*30,
                 sameSite: "None",
-                Secure: true
-                
-            })
+                secure: true // Note the lowercase 's'
+            });
+            
             res.cookie("userId", user._id.toString(), {
                 maxAge: 1000*60*60*24*30,
-                sameSite: "None",
-                Secure: true
-            })
-            res.json("LoggedIn")
+                sameSite: "None", // Use lowercase 'sameSite'
+                secure: true 
+            });
+            
+            res.json("LoggedIn");
+            
         }
     } catch (error) {
         return res.status(500).json({error : "Login Error"});
