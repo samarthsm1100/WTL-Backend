@@ -55,13 +55,15 @@ const login = async (req,res) => {
             res.cookie("accessToken", accessToken, {
                 maxAge: 1000*60*60*24*30,
                 sameSite: "None",
-                secure: true // Note the lowercase 's'
+                secure: true, // Note the lowercase 's',
+                httpOnly: true
             });
             
             res.cookie("userId", user._id.toString(), {
                 maxAge: 1000*60*60*24*30,
                 sameSite: "None", // Use lowercase 'sameSite'
-                secure: true 
+                secure: true ,
+                httpOnly: true
             });
             
             res.json("LoggedIn");
