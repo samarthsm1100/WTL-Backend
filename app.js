@@ -12,7 +12,7 @@ const app = express();
 
 // middleware
 app.use(cors({
-   origin:"*",
+   origin:["*","https://wtl-frontend.vercel.app"],
    credentials:true
 }));
 app.use(express.json());
